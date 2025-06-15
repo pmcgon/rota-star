@@ -1,3 +1,0 @@
-cd backend
-pip freeze > requirements.txt
-cd ..
