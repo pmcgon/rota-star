@@ -1,0 +1,17 @@
+# Python / Django
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+*.py[cod]
+*.pyo
+
+# Node / React
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+
+# System / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.env
