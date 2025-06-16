@@ -133,7 +133,11 @@ def solve_rota(employees_data):
                         shifts = []
                         for s in range(shifts_per_day):
                             if solver.Value(shift_assignments[(e, d, s)]):
-                                shifts.append("9:00am–5:30pm" if s == 0 else "5:30pm–2:15am")
+                                # Different shift times for Wednesday (2) and Saturday (5)
+                                if d in [2, 5]:  # Wednesday and Saturday
+                                    shifts.append("8:00am–5:00pm" if s == 0 else "5:00pm–2:15am")
+                                else:
+                                    shifts.append("9:00am–5:30pm" if s == 0 else "5:30pm–2:15am")
                         if shifts:
                             cell = " / ".join(shifts)  # Join multiple shifts with /
                         else:

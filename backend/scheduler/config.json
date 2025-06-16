@@ -13,7 +13,9 @@
     "is_supervisor": true,
     "max_shifts": 5,
     "days_off": [],
-    "holidays": [],
+    "holidays": [
+      6
+    ],
     "unavailable_shifts": [],
     "must_work_shifts": [
       [
@@ -26,7 +28,9 @@
     "name": "Rosie",
     "is_supervisor": true,
     "max_shifts": 5,
-    "days_off": [],
+    "days_off": [
+      0
+    ],
     "holidays": [],
     "unavailable_shifts": [],
     "must_work_shifts": []

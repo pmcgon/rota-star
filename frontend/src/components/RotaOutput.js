@@ -108,8 +108,20 @@ const RotaOutput = ({ rota }) => {
       <div className="mt-3">
         <h6>Legend:</h6>
         <div className="d-flex flex-wrap gap-3">
-          <span><strong>9:00am–5:30pm</strong> - Morning Shift</span>
-          <span><strong>5:30pm–2:15am</strong> - Evening Shift</span>
+          <div>
+            <strong>Morning Shifts:</strong>
+            <div className="small text-muted">
+              Mon, Tue, Thu, Fri, Sun: 9:00am–5:30pm<br/>
+              Wed, Sat: 8:00am–5:00pm
+            </div>
+          </div>
+          <div>
+            <strong>Evening Shifts:</strong>
+            <div className="small text-muted">
+              Mon, Tue, Thu, Fri, Sun: 5:30pm–2:15am<br/>
+              Wed, Sat: 5:00pm–2:15am
+            </div>
+          </div>
           <span className="text-muted"><strong>Off</strong> - Not Working</span>
           <span className="text-warning"><strong>Holiday</strong> - Scheduled Holiday</span>
           <span className="text-info"><strong>Day Off</strong> - Regular Day Off</span>
@@ -125,7 +137,8 @@ const getCellClass = (cell) => {
   
   if (cell.includes('Holiday')) return 'table-warning';
   if (cell.includes('Day Off')) return 'table-info';
-  if (cell.includes('9:00am–5:30pm') || cell.includes('5:30pm–2:15am')) return 'table-success';
+  if (cell.includes('9:00am–5:30pm') || cell.includes('5:30pm–2:15am') || 
+      cell.includes('8:00am–5:00pm') || cell.includes('5:00pm–2:15am')) return 'table-success';
   if (cell === 'Off') return 'table-light text-muted';
   
   return '';

@@ -14,9 +14,17 @@ const EmployeeModal = ({ show, onClose, employee, onSave }) => {
 
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const shifts = [
-    { value: 0, label: "Morning (9:00am–5:30pm)" },
-    { value: 1, label: "Evening (5:30pm–2:15am)" }
+    { value: 0, label: "Morning" },
+    { value: 1, label: "Evening" }
   ];
+
+  const getShiftLabel = (shift, dayIndex) => {
+    if (dayIndex === 2 || dayIndex === 5) { // Wednesday (2) and Saturday (5)
+      return shift === 0 ? "Morning (8:00am–5:00pm)" : "Evening (5:00pm–2:15am)";
+    } else {
+      return shift === 0 ? "Morning (9:00am–5:30pm)" : "Evening (5:30pm–2:15am)";
+    }
+  };
 
   // Reset form when employee changes
   useEffect(() => {
@@ -287,7 +295,7 @@ const EmployeeModal = ({ show, onClose, employee, onSave }) => {
                                   onChange={() => handleShiftToggle('unavailable_shifts', dayIndex, 0)}
                                 />
                                 <label className="form-check-label small">
-                                  9:00am–5:30pm
+                                  {getShiftLabel(0, dayIndex)}
                                 </label>
                               </div>
                             </td>
@@ -300,7 +308,7 @@ const EmployeeModal = ({ show, onClose, employee, onSave }) => {
                                   onChange={() => handleShiftToggle('unavailable_shifts', dayIndex, 1)}
                                 />
                                 <label className="form-check-label small">
-                                  5:30pm–2:15am
+                                  {getShiftLabel(1, dayIndex)}
                                 </label>
                               </div>
                             </td>
@@ -344,7 +352,7 @@ const EmployeeModal = ({ show, onClose, employee, onSave }) => {
                                   onChange={() => handleShiftToggle('must_work_shifts', dayIndex, 0)}
                                 />
                                 <label className="form-check-label small">
-                                  9:00am–5:30pm
+                                  {getShiftLabel(0, dayIndex)}
                                 </label>
                               </div>
                             </td>
@@ -357,7 +365,7 @@ const EmployeeModal = ({ show, onClose, employee, onSave }) => {
                                   onChange={() => handleShiftToggle('must_work_shifts', dayIndex, 1)}
                                 />
                                 <label className="form-check-label small">
-                                  5:30pm–2:15am
+                                  {getShiftLabel(1, dayIndex)}
                                 </label>
                               </div>
                             </td>
