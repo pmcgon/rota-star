@@ -2,7 +2,7 @@
   {
     "name": "George",
     "is_supervisor": true,
-    "max_shifts": "5",
+    "max_shifts": 5,
     "days_off": [],
     "holidays": [],
     "unavailable_shifts": [],
@@ -11,16 +11,21 @@
   {
     "name": "Anthony",
     "is_supervisor": true,
-    "max_shifts": "5",
+    "max_shifts": 5,
     "days_off": [],
     "holidays": [],
     "unavailable_shifts": [],
-    "must_work_shifts": []
+    "must_work_shifts": [
+      [
+        2,
+        0
+      ]
+    ]
   },
   {
     "name": "Rosie",
     "is_supervisor": true,
-    "max_shifts": "5",
+    "max_shifts": 5,
     "days_off": [],
     "holidays": [],
     "unavailable_shifts": [],
@@ -29,7 +34,7 @@
   {
     "name": "Stephanie",
     "is_supervisor": true,
-    "max_shifts": "5",
+    "max_shifts": 5,
     "days_off": [],
     "holidays": [],
     "unavailable_shifts": [],
@@ -37,33 +42,63 @@
   },
   {
     "name": "Emma",
-    "is_supervisor": true,
-    "max_shifts": "3",
+    "is_supervisor": false,
+    "max_shifts": 3,
     "days_off": [],
     "holidays": [],
-    "unavailable_shifts": [],
-    "must_work_shifts": []
+    "unavailable_shifts": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        6,
+        0
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "must_work_shifts": [
+      [
+        2,
+        1
+      ]
+    ]
   },
   {
     "name": "Patrick",
     "is_supervisor": false,
-    "max_shifts": "3",
+    "max_shifts": 3,
     "days_off": [],
     "holidays": [],
     "unavailable_shifts": [],
-    "must_work_shifts": []
+    "must_work_shifts": [
+      [
+        2,
+        0
+      ]
+    ]
   },
   {
     "name": "Shea",
-    "is_supervisor": false,
-    "max_shifts": "3",
-    "days_off": [],
-    "holidays": [],
-    "unavailable_shifts": [],
-    "must_work_shifts": []
-  },
-  {
-    "name": "john",
     "is_supervisor": false,
     "max_shifts": 3,
     "days_off": [],
