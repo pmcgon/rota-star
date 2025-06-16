@@ -131,5 +131,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React frontend
-    # os.getenv('FRONTEND_URL', ''),  #Production frontend url
+    "https://rota-star.vercel.app/",  #Production frontend url
 ]
