@@ -3,6 +3,8 @@ import axios from "axios";
 import EmployeeModal from "./EmployeeModal";
 import RotaOutput from "./RotaOutput";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
+
 const EmployeeTable = () => {
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,7 +21,7 @@ const EmployeeTable = () => {
 
     const fetchEmployees = () => {
         axios
-            .get("http://localhost:8000/api/employees/")
+            .get(`${API_BASE_URL}/employees/`)
             .then((res) => {
                 // Ensure max_shifts is always a number
                 const processedEmployees = res.data.map(emp => ({
@@ -48,7 +50,7 @@ const EmployeeTable = () => {
         setEmployees(updated);
 
         axios
-            .post("http://localhost:8000/api/employees/", updated)
+            .post(`${API_BASE_URL}/employees/`, updated)
             .then(() => {
                 console.log("Employee saved successfully!");
                 setShowModal(false);
@@ -68,7 +70,7 @@ const EmployeeTable = () => {
         setEmployees(updated);
 
         axios
-            .post("http://localhost:8000/api/employees/", updated)
+            .post(`${API_BASE_URL}/employees/`, updated)
             .then(() => console.log("Employee deleted successfully!"))
             .catch((err) => {
                 console.error("Delete failed", err);
@@ -83,7 +85,7 @@ const EmployeeTable = () => {
         setRotaResult(null);
         
         axios
-            .post("http://localhost:8000/api/generate-rota/", employees)
+            .post(`${API_BASE_URL}/generate-rota/`, employees)
             .then((res) => {
                 console.log("✅ Rota received from server:", res.data);
                 setRotaResult(res.data);
