@@ -146,25 +146,6 @@ const RotaOutput = ({ rota, onGenerateRota, generating }) => {
           </tbody>
         </table>
       </div>
-
-      {/* Shift totals summary */}
-      {rota.shift_totals && Object.keys(rota.shift_totals).length > 0 && (
-        <div className="mt-3">
-          <h5>Shift Distribution</h5>
-          <div className="row">
-            {Object.entries(rota.shift_totals).map(([employee, total]) => (
-              <div key={employee} className="col-md-3 col-sm-4 col-6 mb-2">
-                <div className="card card-body py-2 px-3">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span className="fw-bold">{employee}</span>
-                    <span className="badge bg-primary">{total} shifts</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
