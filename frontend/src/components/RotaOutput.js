@@ -1,11 +1,28 @@
 import React from "react";
 
-const RotaOutput = ({ rota }) => {
+const RotaOutput = ({ rota, onGenerateRota, generating }) => {
   // Handle different status cases
   if (!rota) {
     return (
       <div className="mt-4">
-        <p className="text-muted">👆 Click "Generate Rota" to create a weekly schedule</p>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h3>Weekly Rota</h3>
+          <button 
+            className="btn btn-success" 
+            onClick={onGenerateRota}
+            disabled={generating}
+          >
+            {generating ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                Generating...
+              </>
+            ) : (
+              'Generate Rota'
+            )}
+          </button>
+        </div>
+        <p className="text-muted">Click "Generate Rota" to create a weekly schedule</p>
       </div>
     );
   }
@@ -13,8 +30,25 @@ const RotaOutput = ({ rota }) => {
   if (rota.status === "no_solution") {
     return (
       <div className="mt-4">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h3>Weekly Rota</h3>
+          <button 
+            className="btn btn-success" 
+            onClick={onGenerateRota}
+            disabled={generating}
+          >
+            {generating ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                Generating...
+              </>
+            ) : (
+              'Generate Rota'
+            )}
+          </button>
+        </div>
         <div className="alert alert-warning">
-          <h5>⚠️ No Valid Rota Found</h5>
+          <h5>No Valid Rota Found</h5>
           <p>{rota.message}</p>
           <small className="text-muted">
             Suggestions:
@@ -33,8 +67,25 @@ const RotaOutput = ({ rota }) => {
   if (rota.status === "error") {
     return (
       <div className="mt-4">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h3>Weekly Rota</h3>
+          <button 
+            className="btn btn-success" 
+            onClick={onGenerateRota}
+            disabled={generating}
+          >
+            {generating ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                Generating...
+              </>
+            ) : (
+              'Generate Rota'
+            )}
+          </button>
+        </div>
         <div className="alert alert-danger">
-          <h5>❌ Error Generating Rota</h5>
+          <h5>Error Generating Rota</h5>
           <p>{rota.message || rota.error}</p>
         </div>
       </div>
@@ -42,18 +93,29 @@ const RotaOutput = ({ rota }) => {
   }
 
   // Successful rota generation
-  const isOptimal = rota.status === "optimal";
-  
   return (
     <div className="mt-4">
-      <div className={`alert ${isOptimal ? 'alert-success' : 'alert-info'}`}>
-        <h5>
-          {isOptimal ? "✅ Optimal Rota Generated!" : "✅ Feasible Rota Generated!"}
-        </h5>
-        <p>{rota.message}</p>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3>Weekly Rota</h3>
+        <button 
+          className="btn btn-success" 
+          onClick={onGenerateRota}
+          disabled={generating}
+        >
+          {generating ? (
+            <>
+              <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+              Generating...
+            </>
+          ) : (
+            'Generate Rota'
+          )}
+        </button>
       </div>
 
-      <h3>🗓️ Weekly Rota</h3>
+      <div className="alert alert-success">
+        <h5>Rota Generated!</h5>
+      </div>
       
       {/* Main rota table */}
       <div className="table-responsive">
@@ -88,7 +150,7 @@ const RotaOutput = ({ rota }) => {
       {/* Shift totals summary */}
       {rota.shift_totals && Object.keys(rota.shift_totals).length > 0 && (
         <div className="mt-3">
-          <h5>📊 Shift Distribution</h5>
+          <h5>Shift Distribution</h5>
           <div className="row">
             {Object.entries(rota.shift_totals).map(([employee, total]) => (
               <div key={employee} className="col-md-3 col-sm-4 col-6 mb-2">
@@ -103,30 +165,6 @@ const RotaOutput = ({ rota }) => {
           </div>
         </div>
       )}
-
-      {/* Legend */}
-      <div className="mt-3">
-        <h6>Legend:</h6>
-        <div className="d-flex flex-wrap gap-3">
-          <div>
-            <strong>Morning Shifts:</strong>
-            <div className="small text-muted">
-              Mon, Tue, Thu, Fri, Sun: 9:00am–5:30pm<br/>
-              Wed, Sat: 8:00am–5:00pm
-            </div>
-          </div>
-          <div>
-            <strong>Evening Shifts:</strong>
-            <div className="small text-muted">
-              Mon, Tue, Thu, Fri, Sun: 5:30pm–2:15am<br/>
-              Wed, Sat: 5:00pm–2:15am
-            </div>
-          </div>
-          <span className="text-muted"><strong>Off</strong> - Not Working</span>
-          <span className="text-warning"><strong>Holiday</strong> - Scheduled Holiday</span>
-          <span className="text-info"><strong>Day Off</strong> - Regular Day Off</span>
-        </div>
-      </div>
     </div>
   );
 };

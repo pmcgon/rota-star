@@ -155,73 +155,21 @@ const EmployeeTable = () => {
         <div>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>Employee Rota Configuration</h2>
-                <div className="d-flex gap-2">
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => {
-                            setSelectedEmployee(null);
-                            setShowModal(true);
-                        }}
-                    >
-                        + Add Employee
-                    </button>
-                    <button 
-                        className="btn btn-success" 
-                        onClick={handleGenerateRota}
-                        disabled={generating || totalEmployees < 2}
-                    >
-                        {generating ? (
-                            <>
-                                <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-                                Generating...
-                            </>
-                        ) : (
-                            'Generate Rota'
-                        )}
-                    </button>
-                </div>
-            </div>
-
-            {/* Summary Cards */}
-            <div className="row mb-3">
-                <div className="col-md-3">
-                    <div className="card bg-primary text-white">
-                        <div className="card-body py-2">
-                            <h6 className="card-title mb-1">Total Employees</h6>
-                            <h4 className="mb-0">{totalEmployees}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="card bg-success text-white">
-                        <div className="card-body py-2">
-                            <h6 className="card-title mb-1">Supervisors</h6>
-                            <h4 className="mb-0">{supervisorCount}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className="card bg-info text-white">
-                        <div className="card-body py-2">
-                            <h6 className="card-title mb-1">With Constraints</h6>
-                            <h4 className="mb-0">{employees.filter(hasConstraints).length}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-3">
-                    <div className={`card ${totalEmployees >= 2 && supervisorCount >= 1 ? 'bg-success' : 'bg-warning'} text-white`}>
-                        <div className="card-body py-2">
-                            <h6 className="card-title mb-1">Rota Ready</h6>
-                            <h4 className="mb-0">{totalEmployees >= 2 && supervisorCount >= 1 ? '✓' : '✗'}</h4>
-                        </div>
-                    </div>
-                </div>
+                <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                        setSelectedEmployee(null);
+                        setShowModal(true);
+                    }}
+                >
+                    + Add Employee
+                </button>
             </div>
 
             {/* Requirements Check */}
             {(totalEmployees < 2 || supervisorCount < 1) && (
                 <div className="alert alert-warning">
-                    <h6>⚠️ Requirements for Rota Generation:</h6>
+                    <h6>Requirements for Rota Generation:</h6>
                     <ul className="mb-0">
                         {totalEmployees < 2 && <li>Need at least 2 employees (currently have {totalEmployees})</li>}
                         {supervisorCount < 1 && <li>Need at least 1 supervisor (currently have {supervisorCount})</li>}
@@ -297,7 +245,11 @@ const EmployeeTable = () => {
             )}
 
             {/* Rota Output */}
-            <RotaOutput rota={rotaResult} />
+            <RotaOutput 
+                rota={rotaResult} 
+                onGenerateRota={handleGenerateRota}
+                generating={generating}
+            />
 
             {/* Employee Modal */}
             <EmployeeModal
