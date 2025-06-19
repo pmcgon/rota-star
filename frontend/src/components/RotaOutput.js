@@ -1,6 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 
 const RotaOutput = ({ rota, onGenerateRota, generating }) => {
+  const [copyStatus, setCopyStatus] = useState('');
+
+  // Function to convert rota data to TSV format
+  const convertToTSV = (rotaData) => {
+    if (!rotaData || !rotaData.table || !rotaData.headers) {
+      return '';
+    }
+
+    // Create data rows without headers and employee names (skip first column)
+    const dataRows = rotaData.table.map(row => {
+      // Skip the employee name (first column) and process the 7 day columns
+      return row.slice(1).map(cell => {
+        if (typeof cell === 'string') {
+          let cleanCell = cell.trim();
+          
+          // Replace "Off" with empty string to match the rota.txt format
+          if (cleanCell === 'Off') {
+            cleanCell = '';
+          }
+          // If cell contains time ranges, add \nCasino after it and wrap in quotes
+          else if (cleanCell.match(/\d+:\d+[ap]m[–-]\d+:\d+[ap]m/)) {
+            cleanCell = '"' + cleanCell + '\nCasino"';
+          }
+          
+          return cleanCell;
+        }
+        return cell || ''; // Convert null/undefined to empty string
+      }).join('\t');
+    });
+
+    // Return just the data rows (no headers)
+    return dataRows.join('\n');
+  };
+
+  // Function to copy TSV to clipboard
+  const copyToClipboard = async () => {
+    try {
+      const tsvData = convertToTSV(rota);
+      await navigator.clipboard.writeText(tsvData);
+      setCopyStatus('Copied!');
+      setTimeout(() => setCopyStatus(''), 2000);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      setCopyStatus('Failed to copy');
+      setTimeout(() => setCopyStatus(''), 2000);
+    }
+  };
+
   // Handle different status cases
   if (!rota) {
     return (
@@ -97,20 +145,43 @@ const RotaOutput = ({ rota, onGenerateRota, generating }) => {
     <div className="mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h3>Weekly Rota</h3>
-        <button 
-          className="btn btn-success" 
-          onClick={onGenerateRota}
-          disabled={generating}
-        >
-          {generating ? (
-            <>
-              <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-              Generating...
-            </>
-          ) : (
-            'Generate Rota'
-          )}
-        </button>
+        <div className="d-flex gap-2">
+          <button 
+            className="btn btn-outline-primary" 
+            onClick={copyToClipboard}
+            title="Copy rota as TSV format"
+          >
+            {copyStatus ? (
+              copyStatus === 'Copied!' ? (
+                <>
+                  <span className="text-success">✓</span> Copied!
+                </>
+              ) : (
+                <>
+                  <span className="text-danger">✗</span> Failed
+                </>
+              )
+            ) : (
+              <>
+              Copy
+              </>
+            )}
+          </button>
+          <button 
+            className="btn btn-success" 
+            onClick={onGenerateRota}
+            disabled={generating}
+          >
+            {generating ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                Generating...
+              </>
+            ) : (
+              'Generate Rota'
+            )}
+          </button>
+        </div>
       </div>
 
       <div className="alert alert-success">
